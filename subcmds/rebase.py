@@ -62,13 +62,16 @@ branch but need to incorporate new upstream changes "underneath" them.
     if opt.interactive and not one_project:
       print('error: interactive rebase not supported with multiple projects',
             file=sys.stderr)
+      if len(args) == 1:
+        print('note: project %s is mapped to more than one path' % (args[0],),
+            file=sys.stderr)
       return -1
 
     for project in all_projects:
       cb = project.CurrentBranch
       if not cb:
         if one_project:
-          print("error: project %s has a detatched HEAD" % project.relpath,
+          print("error: project %s has a detached HEAD" % project.relpath,
                 file=sys.stderr)
           return -1
         # ignore branches with detatched HEADs
